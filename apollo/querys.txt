@@ -1,0 +1,134 @@
+################ 1 ################
+query Filmy {
+  filmy {
+    id
+    nazwa
+    premiera
+    rezyser {
+      imie
+      nazwisko
+      rok_ur
+    }
+    gatunek {
+      nazwa
+    }
+  }
+}
+
+################ 2 ################
+
+query Kina {
+  kina {
+    id
+    lokalizacja
+    nazwa
+    kontrahent {
+      kontakt
+      nazwa
+    }
+    filmy {
+      nazwa
+      premiera
+      gatunek {
+        nazwa
+      }
+    }
+  }
+}
+
+################ 3 ################
+
+query Rezyserzy {
+  rezyserzy {
+    imie
+    nazwisko
+    rok_ur
+  }
+}
+
+################ 4 ################
+
+query PierwszySelect($nazwa: String!) {
+  film(nazwa: $nazwa) {
+    id
+    nazwa
+    premiera
+    rezyser {
+      id
+      imie
+    }
+    kino {
+      id
+      lokalizacja
+      nazwa
+      kontrahent {
+        id
+        nazwa
+        kontakt
+      }
+    }
+  }
+}
+
+################ 5 ################
+
+mutation AddMutation($film: AddFilmInput){
+  addFilm(film: $film) {
+    id,
+    nazwa,
+    premiera,
+  }
+}
+
+################ 6 ################
+
+mutation DeleteMutation($id: ID) {
+  deleteFilm(id: $id) {
+    id
+    nazwa
+    gatunek {
+      nazwa
+    }
+  }
+}
+
+################ 7 ################
+
+mutation EditMutation($edits: EditFilmInput, $id: ID){
+  updateFilm(edits: $edits, id: $id) {
+    nazwa,
+    premiera,
+  }
+}
+
+################ 8 ################
+
+query DrugiSelect($rok_ur: Int, $rok_ur1: Int) {
+  rezyser(rok_ur: $rok_ur, rok_ur1: $rok_ur1) {
+    imie
+    nazwisko
+    rok_ur
+  }
+}
+
+################ 9 ################
+
+query GatunkiPoNazwie($nazwa: String) {
+  gatunkiPoNazwie(nazwa: $nazwa) {
+    nazwa
+    gatunek {
+      nazwa
+    }
+  }
+}
+
+################ 10 ################
+
+query filmyWKinach($lokalizacja: String) {
+  filmyWKinach(lokalizacja: $lokalizacja) {
+    nazwa
+    kino {
+      lokalizacja
+    }
+  }
+}
